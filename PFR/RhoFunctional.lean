@@ -1,6 +1,7 @@
 import PFR.ForMathlib.ThreeVariables
 import PFR.Kullback
 import PFR.Main
+import VerifiedAgora.tagger
 
 /-!
 # The rho functional
@@ -1292,6 +1293,7 @@ First estimate
 
 include hX₁ hX₂ hX₁' hX₂' h₁ h₂ h_indep h_min hη in
 /-- $I_1\le 2\eta d[X_1;X_2]$ -/
+@[target]
 lemma I_one_le (hA : A.Nonempty) : I₁ ≤ 2 * η * d[ X₁ # X₂ ] := by
   have : d[X₁ + X₂' # X₂ + X₁'] + d[X₁ | X₁ + X₂' # X₂ | X₂ + X₁'] + I₁ = 2 * k :=
     rdist_add_rdist_add_condMutual_eq _ _ _ _ hX₁ hX₂ hX₁' hX₂' h₁ h₂ h_indep.reindex_four_abdc
@@ -1378,6 +1380,7 @@ lemma I_two_aux :
 
 include hX₁ hX₂ hX₁' hX₂' h₁ h₂ h_indep in
 /-- $d[X_1;X_1]+d[X_2;X_2]= 2d[X_1;X_2]+(I_2-I_1)$. -/
+@[target]
 lemma rdist_add_rdist_eq :
     d[ X₁ # X₁ ] + d[ X₂ # X₂ ] = 2 * k + (I₂ - I₁) := by
   have : d[X₁ + X₂' # X₂ + X₁'] + d[X₁ | X₁ + X₂' # X₂ | X₂ + X₁'] + I₁ = 2 * k :=
@@ -1405,6 +1408,7 @@ lemma I_two_aux' :
 
 include hX₁ hX₂ hX₁' hX₂' h₁ h₂ h_indep h_min hη in
 /-- $I_2\le 2\eta d[X_1;X_2] + \frac{\eta}{1-\eta}(2\eta d[X_1;X_2]-I_1)$. -/
+@[target]
 lemma I_two_le (hA : A.Nonempty) (h'η : η < 1) :
     I₂ ≤ 2 * η * k + (η / (1 - η)) * (2 * η * k - I₁) := by
   have W : k - η * (ρ[X₁ + X₁' # A] - ρ[X₁ # A]) - η * (ρ[X₂ + X₂' # A] - ρ[X₂ # A]) ≤
@@ -1790,6 +1794,7 @@ lemma condRho_sum_le' {Y₁ Y₂ Y₃ Y₄ : Ω → G}
 
 include hX₁ hX₂ hX₁' hX₂' h₁ h₂ h_indep h_min hη in
 /-- If $X_1, X_2$ is a $\phi$-minimizer, then $d[X_1;X_2] = 0$. -/
+@[target]
 lemma dist_of_min_eq_zero' (hA : A.Nonempty) (hη' : η < 1/8) : d[X₁ # X₂] = 0 := by
   let T₁ := X₁ + X₂
   let T₂ := X₁ + X₁'
@@ -1859,6 +1864,7 @@ lemma dist_of_min_eq_zero' (hA : A.Nonempty) (hη' : η < 1/8) : d[X₁ # X₂] 
   exact le_antisymm this (rdist_nonneg hX₁ hX₂)
 
 include hX₁ hX₂ h_min hη in
+@[target]
 theorem dist_of_min_eq_zero (hA : A.Nonempty) (hη' : η < 1/8) : d[X₁ # X₂] = 0 := by
   let ⟨Ω', m', μ, Y₁, Y₂, Y₁', Y₂', hμ, h_indep, hY₁, hY₂, hY₁', hY₂', h_id1, h_id2, h_id1', h_id2'⟩
     := independent_copies4_nondep hX₁ hX₂ hX₁ hX₂ ℙ ℙ ℙ ℙ
@@ -1875,6 +1881,7 @@ open scoped Topology
 /-- For `η ≤ 1/8`, there exist phi-minimizers `X₁, X₂` at zero Rusza distance. For `η < 1/8`,
 all minimizers are fine, by `dist_of_min_eq_zero`. For `η = 1/8`, we use a limit of
 minimizers for `η < 1/8`, which exists by compactness. -/
+@[target]
 lemma phiMinimizer_exists_rdist_eq_zero (hA : A.Nonempty) :
     ∃ (Ω : Type uG) (_ : MeasureSpace Ω) (X₁ : Ω → G) (X₂ : Ω → G),
       Measurable X₁ ∧ Measurable X₂ ∧ IsProbabilityMeasure (ℙ : Measure Ω)
@@ -1935,6 +1942,7 @@ variable {G : Type uG} [AddCommGroup G] [Fintype G]  [Module (ZMod 2) G]
 
 /-- For any random variables $Y_1,Y_2$, there exist a subgroup $H$ such that
   $$ 2\rho(U_H) \leq \rho(Y_1) + \rho(Y_2) + 8 d[Y_1;Y_2].$$ -/
+@[target]
 theorem rho_PFR_conjecture [MeasurableSpace G] [DiscreteMeasurableSpace G]
     (Y₁ Y₂ : Ω → G) (hY₁ : Measurable Y₁) (hY₂ : Measurable Y₂) (A : Finset G) (hA : A.Nonempty) :
     ∃ (H : Submodule (ZMod 2) G) (Ω' : Type uG) (mΩ' : MeasureSpace Ω') (U : Ω' → G),
@@ -1976,6 +1984,7 @@ theorem rho_PFR_conjecture [MeasurableSpace G] [DiscreteMeasurableSpace G]
 
 /-- If $|A+A| \leq K|A|$, then there exists a subgroup $H$ and $t\in G$ such that
 $|A \cap (H+t)| \geq K^{-4} \sqrt{|A||V|}$, and $|H|/|A|\in[K^{-8},K^8]$. -/
+@[target]
 lemma better_PFR_conjecture_aux0 {A : Set G} (h₀A : A.Nonempty) {K : ℝ}
     (hA : Nat.card (A + A) ≤ K * Nat.card A) :
     ∃ (H : Submodule (ZMod 2) G) (t : G),
@@ -2027,6 +2036,7 @@ lemma better_PFR_conjecture_aux0 {A : Set G} (h₀A : A.Nonempty) {K : ℝ}
 an elementary abelian 2-group of doubling constant at most $K$, then there exists a subgroup $H$
 such that $A$ can be covered by at most $K^5 |A|^{1/2} / |H|^{1/2}$ cosets of $H$, and $H$ has
 the same cardinality as $A$ up to a multiplicative factor $K^8$. -/
+@[target]
 lemma better_PFR_conjecture_aux {A : Set G} (h₀A : A.Nonempty) {K : ℝ}
     (hA : Nat.card (A + A) ≤ K * Nat.card A) :
     ∃ (H : Submodule (ZMod 2) G) (c : Set G),
@@ -2073,6 +2083,7 @@ lemma better_PFR_conjecture_aux {A : Set G} (h₀A : A.Nonempty) {K : ℝ}
 /-- If $A \subset {\bf F}_2^n$ is finite non-empty with $|A+A| \leq K|A|$, then there exists a
 subgroup $H$ of ${\bf F}_2^n$ with $|H| \leq |A|$ such that $A$ can be covered by at most $2K^9$
 translates of $H$. -/
+@[target]
 lemma better_PFR_conjecture {A : Set G} (h₀A : A.Nonempty) {K : ℝ}
     (hA : Nat.card (A + A) ≤ K * Nat.card A) :
     ∃ (H : Submodule (ZMod 2) G) (c : Set G),
@@ -2136,6 +2147,7 @@ lemma better_PFR_conjecture {A : Set G} (h₀A : A.Nonempty) {K : ℝ}
 
 /-- Corollary of `better_PFR_conjecture` in which the ambient group is not required to be finite
 (but) then $H$ and $c$ are finite. -/
+@[target]
 theorem better_PFR_conjecture' {G : Type*} [AddCommGroup G] [Module (ZMod 2) G]
     {A : Set G} {K : ℝ} (h₀A : A.Nonempty) (Afin : A.Finite)
     (hA : Nat.card (A + A) ≤ K * Nat.card A) :

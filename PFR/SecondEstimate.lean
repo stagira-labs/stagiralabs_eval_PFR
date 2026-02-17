@@ -54,6 +54,7 @@ local notation3 "I₂" => I[X₁ + X₂ : X₁' + X₁ | X₁ + X₂ + X₁' + X
 include h_min hX₁ hX₁' hX₂ hX₂' h_indep h₁ h₂ in
 /-- $$ d[X_1+\tilde X_1; X_2+\tilde X_2] \geq k - \frac{\eta}{2} ( d[X_1; X_1] + d[X_2;X_2] ).$$
 -/
+@[target]
 lemma rdist_of_sums_ge' : d[X₁ + X₁' # X₂ + X₂'] ≥ k - p.η * (d[X₁ # X₁] + d[X₂ # X₂]) / 2 := by
   refine LE.le.ge (LE.le.trans ?_ (distance_ge_of_min p h_min (hX₁.add hX₁') (hX₂.add hX₂')))
   rw [sub_sub, sub_le_sub_iff_left k, ← mul_add,mul_div_assoc]
@@ -64,7 +65,9 @@ lemma rdist_of_sums_ge' : d[X₁ + X₁' # X₂ + X₂'] ≥ k - p.η * (d[X₁ 
   rw [h₂.entropy_eq, add_sub_cancel_right, ← (IdentDistrib.refl hX₂.aemeasurable).rdist_eq h₂] at h₂'
   linarith
 
+
 include h_min hX₁ hX₁' hX₂ hX₂' h_indep h₁ h₂ in
+@[target]
 lemma second_estimate_aux :
     d[X₁ # X₁] + d[X₂ # X₂] ≤ 2 * (k + (2 * p.η * k - I₁) / (1 - p.η)) := by
   have hX₁_indep : IndepFun X₁ X₁' (μ := ℙ) := h_indep.indepFun (show 0 ≠ 2 by decide)
@@ -93,6 +96,7 @@ lemma second_estimate_aux :
 
 include h_min hX₁ hX₁' hX₂ hX₂' h_indep h₁ h₂ in
 /-- $$ I_2 \leq 2 \eta k + \frac{2 \eta (2 \eta k - I_1)}{1 - \eta}.$$ -/
+@[target]
 lemma second_estimate : I₂ ≤ 2 * p.η * k + (2 * p.η * (2 * p.η * k - I₁)) / (1 - p.η) := by
   have hX₁_indep : IndepFun X₁ X₁' (μ := ℙ) := h_indep.indepFun (show 0 ≠ 2 by decide)
   have hX₂_indep : IndepFun X₂ X₂' (μ := ℙ) := h_indep.indepFun (show 1 ≠ 3 by decide)

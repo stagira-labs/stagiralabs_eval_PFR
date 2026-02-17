@@ -1,6 +1,7 @@
 import Mathlib.Data.Set.Card
 import PFR.Main
 import PFR.MultiTauFunctional
+import VerifiedAgora.tagger
 
 /-!
 # Endgame for the Torsion PFR theorem
@@ -47,23 +48,30 @@ variable [hΩ': MeasureSpace Ω'] [IsFiniteMeasure hΩ'.volume]
 
 /-- We have `I[Z_1 : Z_2 | W], I[Z_2 : Z_3 | W], I[Z_1 : Z_3 | W] ≤ 4m^2 η k`.
 -/
+@[target]
 lemma mutual_information_le_t_12 : I[Z1 : Z2 | W] ≤ 4 * p.m ^ 2 * p.η * k := sorry
 
+@[target]
 lemma mutual_information_le_t_13 : I[Z1 : Z3 | W] ≤ 4 * p.m ^ 2 * p.η * k := sorry
 
+@[target]
 lemma mutual_information_le_t_23 : I[Z2 : Z3 | W] ≤ 4 * p.m ^ 2 * p.η * k := sorry
 
 
 /-- We have $\bbH[W] \leq (2m-1)k + \frac1m \sum_{i=1}^m \bbH[X_i]$. -/
+@[target]
 lemma entropy_of_W_le : H[W] ≤ (2*p.m - 1) * k + (m:ℝ)⁻¹ * ∑ i, H[X i] := sorry
 
 /-- We have $\bbH[Z_2] \leq (8m^2-16m+1) k + \frac{1}{m} \sum_{i=1}^m \bbH[X_i]$. -/
+@[target]
 lemma entropy_of_Z_two_le : H[Z2] ≤ (8 * p.m^2 - 16 * p.m + 1) * k + (m:ℝ)⁻¹ * ∑ i, H[X i] := sorry
 
 /-- We have $\bbI[W : Z_2] \leq 2 (m-1) k$. -/
+@[target]
 lemma mutual_of_W_Z_two_le : I[W : Z2] ≤ 2 * (p.m-1) * k := sorry
 
 /-- We have $\sum_{i=1}^m d[X_i;Z_2|W] \leq 8(m^3-m^2) k$. -/
+@[target]
 lemma sum_of_conditional_distance_le : ∑ i, d[ X i # Z2 | W] ≤ 8 * (p.m^3 - p.m^2)*k := sorry
 
 
@@ -76,14 +84,17 @@ lemma sum_of_conditional_distance_le : ∑ i, d[ X i # Z2 | W] ≤ 8 * (p.m^3 - 
 $$  d[U;U] + \alpha \sum_{i=1}^n d[Y_i;U] \leq \Bigl(2 + \frac{\alpha n}{2} \Bigr) \delta + \alpha \sum_{i=1}^n d[Y_i;T_2].
 $$
 -/
+@[target]
 lemma dist_of_U_add_le {G: Type*} [MeasureableFinGroup G] {Ω: Type*} [MeasureSpace Ω] (T₁ T₂ T₃ : Ω → G) (hsum: T₁ + T₂ + T₃ = 0) (n:ℕ) {Ω': Fin n → Type*} (hΩ': ∀ i, MeasureSpace (Ω' i)) (Y: ∀ i, (Ω' i) → G) {α:ℝ} (hα: α > 0): ∃ (Ω'':Type*) (hΩ'': MeasureSpace Ω'') (U: Ω'' → G), d[U # U] + α * ∑ i, d[Y i # U] ≤ (2 + α * n / 2) * (I[T₁ : T₂] + I[T₁ : T₃] + I[T₂ : T₃]) + α * ∑ i, d[Y i # T₂] := sorry
 
 /-- We have $k = 0$. -/
+@[target]
 lemma k_eq_zero : k = 0 := sorry
 
 end AnalyzeMinimizer
 
 /-- Suppose that $G$ is a finite abelian group of torsion $m$. Suppose that $X$ is a $G$-valued random variable. Then there exists a subgroup $H \leq G$ such that \[ d[X;U_H] \leq 64 m^3 d[X;X].\] -/
+@[target]
 lemma dist_of_X_U_H_le {G : Type*} [AddCommGroup G] [Fintype G] [MeasurableSpace G]
   [MeasurableSingletonClass G] (m:ℕ) (hm: m ≥ 2) (htorsion: ∀ x:G, m • x = 0) (Ω: Type*) [MeasureSpace Ω] (X: Ω → G): ∃ H : AddSubgroup G, ∃ Ω' : Type*, ∃ mΩ : MeasureSpace Ω', ∃ U : Ω' → G,
     IsUniform H U ∧ d[X # U] ≤ 64 * m^3 * d[X # X] := sorry
@@ -93,6 +104,7 @@ lemma dist_of_X_U_H_le {G : Type*} [AddCommGroup G] [Fintype G] [MeasurableSpace
   {(64m^3+2)/2}|A|^{1/2}/|H|^{1/2}$ translates of a subspace $H$ of $G$ with
  $|H|/|A| \in [K^{-64m^3}, K^{64m^3}]$
      -/
+@[target]
 lemma torsion_PFR_conjecture_aux {G : Type*} [AddCommGroup G] [Fintype G] {m:ℕ} (hm: m ≥ 2)
     (htorsion: ∀ x:G, m • x = 0) {A : Set G} [Finite A] {K : ℝ} (h₀A : A.Nonempty)
     (hA : Nat.card (A + A) ≤ K * Nat.card A) :
@@ -160,6 +172,7 @@ lemma torsion_exists_subgroup_subset_card_le {G : Type*} {m : ℕ} (hm : m ≥ 2
 /--Suppose that $G$ is a finite abelian group of torsion $m$.
   If $A \subset G$ is non-empty and $|A+A| \leq K|A|$, then $A$ can be covered by most $mK^{64m^3+1}$ translates of a subspace $H$ of $G$ with $|H| \leq |A|$.
 -/
+@[target]
 theorem torsion_PFR {G : Type*} [AddCommGroup G] [Fintype G] {m:ℕ} (hm: m ≥ 2)
      (htorsion : ∀ x:G, m • x = 0) {A : Set G} [Finite A] {K : ℝ} (h₀A : A.Nonempty)
      (hA : Nat.card (A + A) ≤ K * Nat.card A) :

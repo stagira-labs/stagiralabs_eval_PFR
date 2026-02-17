@@ -2,6 +2,7 @@ import Mathlib.Algebra.Module.ZMod
 import PFR.TauFunctional
 import PFR.HundredPercent
 import PFR.Endgame
+import VerifiedAgora.tagger
 
 /-!
 # Entropic version of polynomial Freiman-Ruzsa conjecture
@@ -30,6 +31,7 @@ variable (p : refPackage Ω₀₁ Ω₀₂ G) {X₁ : Ω → G} {X₂ : Ω → G
 include hX₁ hX₂ in
 /-- If $d[X_1;X_2] > 0$ then there are $G$-valued random variables $X'_1, X'_2$ such that $\tau[X'_1;X'_2] < \tau[X_1;X_2]$.
 Phrased in the contrapositive form for convenience of proof. -/
+@[target]
 theorem tau_strictly_decreases (h_min : tau_minimizes p X₁ X₂) (hpη : p.η = 1/9) :
     d[X₁ # X₂] = 0 := by
   let ⟨A, mA, μ, Y₁, Y₂, Y₁', Y₂', hμ, h_indep, hY₁, hY₂, hY₁', hY₂', h_id1, h_id2, h_id1', h_id2'⟩
@@ -43,6 +45,7 @@ theorem tau_strictly_decreases (h_min : tau_minimizes p X₁ X₂) (hpη : p.η 
 
 /-- `entropic_PFR_conjecture`: For two $G$-valued random variables $X^0_1, X^0_2$, there is some
     subgroup $H \leq G$ such that $d[X^0_1;U_H] + d[X^0_2;U_H] \le 11 d[X^0_1;X^0_2]$. -/
+@[target]
 theorem entropic_PFR_conjecture (hpη : p.η = 1/9):
     ∃ H : Submodule (ZMod 2) G, ∃ Ω : Type uG, ∃ mΩ : MeasureSpace Ω, ∃ U : Ω → G,
     IsProbabilityMeasure (ℙ : Measure Ω) ∧ Measurable U ∧
@@ -59,6 +62,7 @@ theorem entropic_PFR_conjecture (hpη : p.η = 1/9):
   have : d[p.X₀₂ # U] ≤ d[p.X₀₂ # X₂] + d[X₂ # U] := rdist_triangle p.hmeas2 hX₂ hU
   linarith
 
+@[target]
 theorem entropic_PFR_conjecture' (hpη : p.η = 1/9):
     ∃ H : Submodule (ZMod 2) G, ∃ Ω : Type uG, ∃ mΩ : MeasureSpace Ω, ∃ U : Ω → G,
     IsUniform H U ∧ d[p.X₀₁ # U] ≤ 6 * d[p.X₀₁ # p.X₀₂] ∧

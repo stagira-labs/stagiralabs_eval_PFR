@@ -129,6 +129,7 @@ include h_indep hX₁ hX₂ hX₁' hX₂' h₁ h₂ h_min in
 `I[U : V | S] + I[V : W | S] + I[W : U | S]` is less than or equal to
 `6 * η * k - (1 - 5 * η) / (1 - η) * (2 * η * k - I₁)`.
 -/
+@[target]
 lemma sum_condMutual_le [Module (ZMod 2) G] [IsProbabilityMeasure (ℙ : Measure Ω)] :
     I[U : V | S] + I[V : W | S] + I[W : U | S]
       ≤ 6 * p.η * k - (1 - 5 * p.η) / (1 - p.η) * (2 * p.η * k - I₁) := by
@@ -206,6 +207,7 @@ $$ \sum_{i=1}^2 \sum_{A\in\{U,V,W\}} \big(d[X^0_i;A|S] - d[X^0_i;X_i]\big)$$
 is less than or equal to
 $$ \leq (6 - 3\eta) k + 3(2 \eta k - I_1).$$
 -/
+@[target]
 lemma sum_dist_diff_le [IsProbabilityMeasure (ℙ : Measure Ω)] [Module (ZMod 2) G] :
     c[U|S # U|S] + c[V|S # V|S] + c[W|S # W|S] ≤ (6 - 3 * p.η)*k + 3 * (2*p.η*k - I₁) := by
   let X₀₁ := p.X₀₁
@@ -364,6 +366,7 @@ is at most
 $$ \delta + \eta ( d[X^0_1;T_1]-d[X^0_1;X_1]) + \eta (d[X^0_2;T_2]-d[X^0_2;X_2]) $$
 $$ + \tfrac12 \eta I[T_1: T_3] + \tfrac12 \eta I[T_2: T_3].$$
 -/
+@[target]
 lemma construct_good_prelim :
     k ≤ δ + p.η * c[T₁ # T₂] + p.η * (I[T₁: T₃] + I[T₂ : T₃])/2 := by
   let sum1 : ℝ := (Measure.map T₃ ℙ)[fun t ↦ d[T₁; ℙ[|T₃ ⁻¹' {t}] # T₂; ℙ[|T₃ ⁻¹' {t}]]]
@@ -436,6 +439,7 @@ is at most
 $$\delta + \frac{\eta}{3} \biggl( \delta + \sum_{i=1}^2 \sum_{j = 1}^3
     (d[X^0_i;T_j] - d[X^0_i; X_i]) \biggr).$$
 -/
+@[target]
 lemma construct_good :
     k ≤ δ + (p.η/3) * (δ + c[T₁ # T₁] + c[T₂ # T₂] + c[T₃ # T₃]) := by
   have v2 := construct_good_prelim p X₁ X₂ h_min (by rw [← hT]; abel) hT₁ hT₃ hT₂
@@ -445,8 +449,10 @@ lemma construct_good :
     at *
   linarith
 
+
 include hT₁ hT₂ hT₃ hT h_min in
 omit [IsProbabilityMeasure (ℙ : Measure Ω')] in
+@[target]
 lemma construct_good' (μ : Measure Ω') [IsProbabilityMeasure μ] :
     k ≤ δ[μ] + (p.η/3) * (δ[μ] + c[T₁ ; μ # T₁ ; μ] + c[T₂ ; μ # T₂ ; μ] + c[T₃ ; μ # T₃ ; μ]) := by
   let _ : MeasureSpace Ω' := ⟨μ⟩
@@ -461,7 +467,9 @@ lemma delta'_eq_integral :
   simp_rw [condMutualInfo_eq_integral_mutualInfo, integral_fintype _ .of_finite, smul_add,
     Finset.sum_add_distrib]
 
+
 include hT₁ hT₂ hT₃ hT h_min hR hX₁ hX₂ in
+@[target]
 lemma cond_construct_good [IsProbabilityMeasure (ℙ : Measure Ω)] :
     k ≤ δ' + (p.η/3) * (δ' + c[T₁ | R # T₁ | R] + c[T₂ | R # T₂ | R] + c[T₃ | R # T₃ | R]) := by
   rw [delta'_eq_integral, cond_c_eq_integral _ _ _ hT₁ hR, cond_c_eq_integral _ _ _ hT₂ hR,
@@ -492,6 +500,7 @@ end construct_good
 include hX₁ hX₂ h_min h₁ h₂ h_indep hX₁ hX₂ hX₁' hX₂' in
 /-- If `d[X₁ ; X₂] > 0` then there are `G`-valued random variables `X₁', X₂'` such that
 Phrased in the contrapositive form for convenience of proof. -/
+@[target]
 theorem tau_strictly_decreases_aux
     [IsProbabilityMeasure (ℙ : Measure Ω)] [Module (ZMod 2) G]
     (hpη : p.η = 1/9) : d[X₁ # X₂] = 0 := by

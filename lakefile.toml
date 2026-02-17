@@ -11,5 +11,12 @@ pp.proofs.withType = false  # Elide the types of proofs in terms
 name = "LeanAPAP"
 git = "https://github.com/YaelDillies/LeanAPAP.git"
 
+
+[[require]]
+name = "VerifiedAgora"
+git = "https://github.com/stagiralabs/VerifiedAgora.git"
+rev = "rewrite_1"
+
+
 [[lean_lib]]
 name = "PFR"

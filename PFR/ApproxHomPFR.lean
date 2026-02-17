@@ -4,6 +4,7 @@ import Mathlib.Analysis.InnerProductSpace.PiL2
 import LeanAPAP.Extras.BSG
 import PFR.HomPFR
 import PFR.RhoFunctional
+import VerifiedAgora.tagger
 
 /-!
 # The approximate homomorphism form of PFR
@@ -30,6 +31,7 @@ Let $f : G \to G'$ be a function, and suppose that there are at least
 $|G|^2 / K$ pairs $(x,y) \in G^2$ such that $$ f(x+y) = f(x) + f(y).$$
 Then there exists a homomorphism $\phi : G \to G'$ and a constant $c \in G'$ such that
 $f(x) = \phi(x)+c$ for at least $|G| / (2 ^ {144} * K ^ {122})$ values of $x \in G$. -/
+@[target]
 theorem approx_hom_pfr (f : G → G') (K : ℝ) (hK : K > 0)
     (hf : Nat.card G ^ 2 / K ≤ Nat.card {x : G × G | f (x.1 + x.2) = f x.1 + f x.2}) :
     ∃ (φ : G →+ G') (c : G'), Nat.card {x | f x = φ x + c} ≥ Nat.card G / (2 ^ 144 * K ^ 122) := by

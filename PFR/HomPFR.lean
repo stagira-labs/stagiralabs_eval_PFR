@@ -2,6 +2,7 @@ import Mathlib.Algebra.Field.ZMod
 import Mathlib.Data.Set.Card
 import PFR.Mathlib.LinearAlgebra.Basis.VectorSpace
 import PFR.RhoFunctional
+import VerifiedAgora.tagger
 
 /-!
 # The homomorphism form of PFR
@@ -65,6 +66,7 @@ open Set Fintype
 $$ S := \{ f(x+y)-f(x)-f(y): x,y \in G \}.$$
 Then there exists a homomorphism $\phi: G \to G'$ such that
 $$ |\{f(x) - \phi(x)\}| \leq |S|^{10}. $$ -/
+@[target]
 theorem homomorphism_pfr (f : G → G') (S : Set G') (hS : ∀ x y : G, f (x+y) - (f x) - (f y) ∈ S) :
   ∃ (φ : G →+ G') (T : Set G'), Nat.card T ≤ Nat.card S ^ 10 ∧ ∀ x : G, (f x) - (φ x) ∈ T := by
   classical

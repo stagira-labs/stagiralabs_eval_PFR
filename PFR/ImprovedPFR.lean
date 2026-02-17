@@ -1,4 +1,5 @@
 import PFR.Main
+import VerifiedAgora.tagger
 
 /-!
 # Improved PFR
@@ -323,6 +324,7 @@ omit [IsProbabilityMeasure (ℙ : Measure Ω₀₁)] [IsProbabilityMeasure (ℙ 
 /-- For any $T_1, T_2, T_3$ adding up to $0$, then $k$ is at most
 $$ \delta + \eta (d[X^0_1;T_1|T_3]-d[X^0_1;X_1]) + \eta (d[X^0_2;T_2|T_3]-d[X^0_2;X_2])$$
 where $\delta = I[T₁ : T₂ ; μ] + I[T₂ : T₃ ; μ] + I[T₃ : T₁ ; μ]$. -/
+@[target]
 lemma construct_good_prelim' : k ≤ δ + p.η * c[T₁ | T₃ # T₂ | T₃] := by
   let sum1 : ℝ := (Measure.map T₃ ℙ)[fun t ↦ d[T₁; ℙ[|T₃ ⁻¹' {t}] # T₂; ℙ[|T₃ ⁻¹' {t}]]]
   let sum2 : ℝ := (Measure.map T₃ ℙ)[fun t ↦ d[p.X₀₁; ℙ # T₁; ℙ[|T₃ ⁻¹' {t}]] - d[p.X₀₁ # X₁]]
@@ -381,6 +383,7 @@ omit [IsProbabilityMeasure (ℙ : Measure Ω₀₁)] [IsProbabilityMeasure (ℙ 
  $$ \delta + \frac{\eta}{6} \sum_{i=1}^2 \sum_{1 \leq j,l \leq 3; j \neq l}
      (d[X^0_i;T_j|T_l] - d[X^0_i; X_i]).$$
 -/
+@[target]
 lemma construct_good_improved' :
     k ≤ δ + (p.η / 6) *
      ((d[p.X₀₁ # T₁ | T₂] - d[p.X₀₁ # X₁]) + (d[p.X₀₁ # T₁ | T₃] - d[p.X₀₁ # X₁])
@@ -411,6 +414,7 @@ omit [IsProbabilityMeasure (ℙ : Measure Ω₀₁)] [IsProbabilityMeasure (ℙ 
 [IsProbabilityMeasure (ℙ : Measure Ω)] in
 /-- Rephrase `construct_good_improved'` with an explicit probability measure, as we will
 apply it to (varying) conditional measures. -/
+@[target]
 lemma construct_good_improved'' {Ω' : Type*} [MeasurableSpace Ω'] (μ : Measure Ω')
     [IsProbabilityMeasure μ] {T₁ T₂ T₃ : Ω' → G}
     (hT : T₁ + T₂ + T₃ = 0) (hT₁ : Measurable T₁) (hT₂ : Measurable T₂) (hT₃ : Measurable T₃) :
@@ -433,6 +437,7 @@ omit [IsProbabilityMeasure (ℙ : Measure Ω₀₁)] [IsProbabilityMeasure (ℙ 
 $$ \leq I(U : V \, | \, S) + I(V : W \, | \,S) + I(W : U \, | \, S) + \frac{\eta}{6}
 \sum_{i=1}^2 \sum_{A,B \in \{U,V,W\}: A \neq B} (d[X^0_i;A|B,S] - d[X^0_i; X_i]).$$
 -/
+@[target]
 lemma averaged_construct_good : k ≤ (I[U : V | S] + I[V : W | S] + I[W : U | S])
     + (p.η / 6) * (((d[p.X₀₁ # U | ⟨V, S⟩] - d[p.X₀₁ # X₁]) + (d[p.X₀₁ # U | ⟨W, S⟩] - d[p.X₀₁ # X₁])
                   + (d[p.X₀₁ # V | ⟨U, S⟩] - d[p.X₀₁ # X₁]) + (d[p.X₀₁ # V | ⟨W, S⟩] - d[p.X₀₁ # X₁])
@@ -666,6 +671,7 @@ lemma dist_diff_bound_2 :
   linarith only [I1, I2, I3, I4, I5, I6]
 
 include hX₁ hX₂ hX₁' hX₂' h₁ h₂ h_indep h_min in
+@[target]
 lemma averaged_final : k ≤ (6 * p.η * k - (1 - 5 * p.η) / (1 - p.η) * (2 * p.η * k - I₁))
     + p.η / 6 * (8 * k + 2 * (d[X₁ # X₁] + d[X₂ # X₂])) := by
   apply (averaged_construct_good hX₁ hX₂ hX₁' hX₂' h_min).trans
@@ -680,6 +686,7 @@ include hX₁ hX₂ hX₁' hX₂' h₁ h₂ h_indep h_min in
 of this lemma uses copies `X₁', X₂'` already in the context. For a version that does not assume
 these are given and constructs them instead, use `tau_strictly_decreases'`.
 -/
+@[target]
 theorem tau_strictly_decreases_aux' (hp : 8 * p.η < 1) : d[X₁ # X₂] = 0 := by
   have : 0 < p.η := p.hη
   have : k ≤ 8 * p.η * k := by calc
@@ -701,6 +708,7 @@ theorem tau_strictly_decreases_aux' (hp : 8 * p.η < 1) : d[X₁ # X₂] = 0 := 
   nlinarith
 
 include hX₁ hX₂ h_min in
+@[target]
 theorem tau_strictly_decreases' (hp : 8 * p.η < 1) : d[X₁ # X₂] = 0 := by
   let ⟨A, mA, μ, Y₁, Y₂, Y₁', Y₂', hμ, h_indep, hY₁, hY₂, hY₁', hY₂', h_id1, h_id2, h_id1', h_id2'⟩
     := independent_copies4_nondep hX₁ hX₂ hX₁ hX₂ ℙ ℙ ℙ ℙ
@@ -731,6 +739,7 @@ variable (p : refPackage Ω₀₁ Ω₀₂ G)
 /-- For `p.η ≤ 1/8`, there exist τ-minimizers `X₁, X₂` at zero Rusza distance. For `p.η < 1/8`,
 all minimizers are fine, by `tau_strictly_decreases'`. For `p.η = 1/8`, we use a limit of
 minimizers for `η < 1/8`, which exists by compactness. -/
+@[target]
 lemma tau_minimizer_exists_rdist_eq_zero :
     ∃ (Ω : Type uG) (_ : MeasureSpace Ω) (X₁ : Ω → G) (X₂ : Ω → G),
       Measurable X₁ ∧ Measurable X₂ ∧ IsProbabilityMeasure (ℙ : Measure Ω) ∧ tau_minimizes p X₁ X₂
@@ -811,6 +820,7 @@ lemma tau_minimizer_exists_rdist_eq_zero :
 
 /-- `entropic_PFR_conjecture_improv`: For two $G$-valued random variables $X^0_1, X^0_2$, there is some
     subgroup $H \leq G$ such that $d[X^0_1;U_H] + d[X^0_2;U_H] \le 10 d[X^0_1;X^0_2]$. -/
+@[target]
 theorem entropic_PFR_conjecture_improv (hpη : p.η = 1/8) :
     ∃ (H : Submodule (ZMod 2) G) (Ω : Type uG) (mΩ : MeasureSpace Ω) (U : Ω → G),
     IsProbabilityMeasure (ℙ : Measure Ω) ∧ Measurable U ∧
@@ -829,6 +839,7 @@ theorem entropic_PFR_conjecture_improv (hpη : p.η = 1/8) :
 /-- `entropic_PFR_conjecture_improv'`: For two $G$-valued random variables $X^0_1, X^0_2$, there is
 some subgroup $H \leq G$ such that $d[X^0_1;U_H] + d[X^0_2;U_H] \le 10 d[X^0_1;X^0_2]$., and
 d[X^0_1; U_H] and d[X^0_2; U_H] are at most 5/2 * d[X^0_1;X^0_2] -/
+@[target]
 theorem entropic_PFR_conjecture_improv' (hpη : p.η = 1/8) :
     ∃ H : AddSubgroup G, ∃ Ω : Type uG, ∃ mΩ : MeasureSpace Ω, ∃ U : Ω → G,
     IsProbabilityMeasure (ℙ : Measure Ω) ∧ Measurable U ∧
@@ -861,6 +872,7 @@ variable {G Ω : Type*} [AddCommGroup G] [Module (ZMod 2) G] [Fintype G]
 an elementary abelian 2-group of doubling constant at most $K$, then there exists a subgroup $H$
 such that $A$ can be covered by at most $K^6 |A|^{1/2} / |H|^{1/2}$ cosets of $H$, and $H$ has
 the same cardinality as $A$ up to a multiplicative factor $K^10$. -/
+@[target]
 lemma PFR_conjecture_improv_aux (h₀A : A.Nonempty) (hA : Nat.card (A + A) ≤ K * Nat.card A) :
     ∃ (H : Submodule (ZMod 2) G) (c : Set G),
     Nat.card c ≤ K ^ 6 * Nat.card A ^ (1/2) * Nat.card H ^ (-1/2)
@@ -979,6 +991,7 @@ lemma PFR_conjecture_improv_aux (h₀A : A.Nonempty) (hA : Nat.card (A + A) ≤ 
 /-- The polynomial Freiman-Ruzsa (PFR) conjecture: if $A$ is a subset of an elementary abelian
 2-group of doubling constant at most $K$, then $A$ can be covered by at most $2K^{11$} cosets of
 a subgroup of cardinality at most $|A|$. -/
+@[target]
 theorem PFR_conjecture_improv (h₀A : A.Nonempty) (hA : Nat.card (A + A) ≤ K * Nat.card A) :
      ∃ (H : Submodule (ZMod 2) G) (c : Set G),
       Nat.card c < 2 * K ^ 11 ∧ Nat.card H ≤ Nat.card A ∧ A ⊆ c + H := by
@@ -1039,6 +1052,7 @@ theorem PFR_conjecture_improv (h₀A : A.Nonempty) (hA : Nat.card (A + A) ≤ K 
 
 /-- Corollary of `PFR_conjecture_improv` in which the ambient group is not required to be finite
 (but) then $H$ and $c$ are finite. -/
+@[target]
 theorem PFR_conjecture_improv' {G : Type*} [AddCommGroup G] [Module (ZMod 2) G]
     {A : Set G} {K : ℝ} (h₀A : A.Nonempty) (Afin : A.Finite)
     (hA : Nat.card (A + A) ≤ K * Nat.card A) :
