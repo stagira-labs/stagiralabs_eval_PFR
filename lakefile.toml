@@ -15,8 +15,7 @@ git = "https://github.com/YaelDillies/LeanAPAP.git"
 [[require]]
 name = "VerifiedAgora"
 git = "https://github.com/stagiralabs/VerifiedAgora.git"
-rev = "rewrite_1"
-
+rev = "sketchyGetTargets"
 
 [[lean_lib]]
 name = "PFR"
