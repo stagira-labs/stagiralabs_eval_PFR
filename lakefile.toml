@@ -10,6 +10,7 @@ pp.proofs.withType = false  # Elide the types of proofs in terms
 [[require]]
 name = "LeanAPAP"
 git = "https://github.com/YaelDillies/LeanAPAP.git"
+rev = "576332487fed66af7f4b9ca474c0984c5ed04c8b"
 
 
 [[require]]
