@@ -1415,6 +1415,7 @@ lemma iter_multiDist_chainRule {m : ℕ}
     exact .of_discrete
   exact Fin.induction zero succ n
 
+/-- This completes the proof of iter_multiDist_chainRule. -/
 
 theorem Finset.map_sdiff {α : Type u_1} {β : Type u_2} [DecidableEq α] [DecidableEq β]
     {f : α ↪ β} (s₁ : Finset α) (s₂ : Finset α) :
